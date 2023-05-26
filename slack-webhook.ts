@@ -1,7 +1,6 @@
 import fetch from 'node-fetch'
 import { setupEnvironment } from './utils'
 
-type RefType = 'branch' | 'tag' | 'commit' | 'release'
 type Status = 'success' | 'failure' | 'cancelled'
 type Env = {
 	WORKFLOW_NAME?: string
@@ -64,7 +63,7 @@ async function run() {
 		],
 	}
 
-	const webhookContent = {
+	const xwebhookContent = {
 		username: 'nx-ecosystem-ci (ci)',
 		icon_url: 'https://github.com/nrwl.png',
 		blocks: [
@@ -81,6 +80,99 @@ async function run() {
 					type: 'mrkdwn',
 					text: await createDescription(env.SUITE, targetText),
 				},
+			},
+		],
+	}
+
+	const webhookContent = {
+		blocks: [
+			{
+				type: 'section',
+				text: {
+					type: 'mrkdwn',
+					text: `Hello, this is the result of the CI's test run. ${
+						statusConfig[env.STATUS].emoji
+					}  ${env.SUITE}`,
+				},
+			},
+			{
+				type: 'divider',
+			},
+			{
+				type: 'section',
+				text: {
+					type: 'mrkdwn',
+					text: '*Farmhouse Thai Cuisine*\n:star::star::star::star: 1528 reviews\n They do have some vegan options, like the roti and curry, plus they have a ton of salad stuff and noodles can be ordered without meat!! They have something for everyone here',
+				},
+				accessory: {
+					type: 'image',
+					image_url:
+						'https://s3-media3.fl.yelpcdn.com/bphoto/c7ed05m9lC2EmA3Aruue7A/o.jpg',
+					alt_text: 'alt text for image',
+				},
+			},
+			{
+				type: 'section',
+				text: {
+					type: 'mrkdwn',
+					text: '*Kin Khao*\n:star::star::star::star: 1638 reviews\n The sticky rice also goes wonderfully with the caramelized pork belly, which is absolutely melt-in-your-mouth and so soft.',
+				},
+				accessory: {
+					type: 'image',
+					image_url:
+						'https://s3-media2.fl.yelpcdn.com/bphoto/korel-1YjNtFtJlMTaC26A/o.jpg',
+					alt_text: 'alt text for image',
+				},
+			},
+			{
+				type: 'section',
+				text: {
+					type: 'mrkdwn',
+					text: '*Ler Ros*\n:star::star::star::star: 2082 reviews\n I would really recommend the  Yum Koh Moo Yang - Spicy lime dressing and roasted quick marinated pork shoulder, basil leaves, chili & rice powder.',
+				},
+				accessory: {
+					type: 'image',
+					image_url:
+						'https://s3-media2.fl.yelpcdn.com/bphoto/DawwNigKJ2ckPeDeDM7jAg/o.jpg',
+					alt_text: 'alt text for image',
+				},
+			},
+			{
+				type: 'divider',
+			},
+			{
+				type: 'actions',
+				elements: [
+					{
+						type: 'button',
+						text: {
+							type: 'plain_text',
+							text: 'Farmhouse',
+							emoji: true,
+						},
+						value: 'click_me_123',
+					},
+					{
+						type: 'button',
+						text: {
+							type: 'plain_text',
+							text: 'Kin Khao',
+							emoji: true,
+						},
+						value: 'click_me_123',
+						url: 'https://google.com',
+					},
+					{
+						type: 'button',
+						text: {
+							type: 'plain_text',
+							text: 'Ler Ros',
+							emoji: true,
+						},
+						value: 'click_me_123',
+						url: 'https://google.com',
+					},
+				],
 			},
 		],
 	}
