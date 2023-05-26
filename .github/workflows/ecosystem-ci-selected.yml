@@ -69,7 +69,7 @@ jobs:
           ${{ inputs.suite }}
         id: ecosystem-ci-run
       - if: always()
-        run: pnpm tsx discord-webhook.ts
+        run: pnpm tsx slack-webhook.ts
         env:
           WORKFLOW_NAME: ci-selected
           REF_TYPE: ${{ inputs.refType }}
