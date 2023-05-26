@@ -1,7 +1,6 @@
 import fetch from 'node-fetch'
 import { setupEnvironment } from './utils'
 
-type RefType = 'branch' | 'tag' | 'commit' | 'release'
 type Status = 'success' | 'failure' | 'cancelled'
 type Env = {
 	WORKFLOW_NAME?: string
@@ -64,7 +63,7 @@ async function run() {
 		],
 	}
 
-	const webhookContent = {
+	const xwebhookContent = {
 		username: 'nx-ecosystem-ci (ci)',
 		icon_url: 'https://github.com/nrwl.png',
 		blocks: [
@@ -81,6 +80,23 @@ async function run() {
 					type: 'mrkdwn',
 					text: await createDescription(env.SUITE, targetText),
 				},
+			},
+		],
+	}
+
+	const webhookContent = {
+		blocks: [
+			{
+				type: 'section',
+				text: {
+					type: 'mrkdwn',
+					text: `Hello, this is the result of the CI's test run. ${
+						statusConfig[env.STATUS].emoji
+					}  ${env.SUITE}`,
+				},
+			},
+			{
+				type: 'divider',
 			},
 		],
 	}
